@@ -1,0 +1,187 @@
+
+
+Class
+A blueprint to create objects
+Includes attributes and methods that the created objects all share
+
+Object
+Allocated region of storage
+Both the data and the instructions that operate on that data
+Instance of a class
+
+Abstraction
+“Extracting the essential details about an item or group
+of items, while ignoring the unessential details.”
+Edward Berard
+
+“The process of identifying common patterns that have
+systematic variations; an abstraction represents the
+common pattern and provides a means for specifying
+which variation to use.”
+Richard Gabriel
+
+Encapsulation
+Enclosing all parts of an abstraction within a container
+process of wrapping up of data (properties) and behavior (methods) of an object into a single unit
+Encapsulation enables data hiding, hiding irrelevant information from the users of a class and exposing only the relevant details required by the user.
+
+public class Employee {
+    private BigDecimal salary = new BigDecimal(50000.00);
+ 
+    public BigDecimal getSalary() {
+        return salary;
+    }
+ 
+    public static void main() {
+        Employee e = new Employee();
+        BigDecimal sal = e.getSalary();
+    }
+}
+
+/* This Main method can check the balance via the public "getSalary" method provided by the "Employee" class but it cannot manipulate the value of "salary"
+
+Information Hiding
+segregation of the design decisions in a computer program that are most likely to change, thus protecting other parts of the program from extensive modification if the design decision is changed
+Ex: present a standard interface (pedals, wheel, shifter, signals, gauges, etc.) on which people are trained and licensed. Thus, people only have to learn to drive a car; they don't need to learn a completely different way of driving every time they drive a new model. 
+
+Polymorphism 
+The ability to change form is known as polymorphism. Java supports different kinds of polymorphism like oveloading, overriding, parametric etc.
+Overloading:The same method name (method overloading) or operator symbol (operator overloading) can be used in different contents 
+And 
+Overriding 
+
+
+Class
+Represents an abstraction
+Encapsulates data and operations of the abstraction
+Hide design decisions/details
+
+Data+Operations
+
+While talking about objects,many people focus on the lesser idea.
+The big idea is "messaging"
+I thought of objects being like biological cells and/or individual computers on a network, only able to communicate with messages.
+The key in making great and growable systems is much more to 
+- design how its modules communicate 
+rather than 
+what their internal properties and behaviors should be
+I wanted to get rid of data
+
+Classes and Objects
+Abstraction
+Hide data
+Hide design decisions
+Messages
+
+Relevant Heuristics
+class should capture one and only one key abstraction
+Keep related data and behavior in one place
+
+Signs of Poor OO Design
+Data Classes
+Helper functions
+
+Helper method
+Method in class that Does not access any field (data member, instance variables)
+Just uses parameters
+Sign that Data and Operations are not being kept together
+
+Helper Method - Example Count the number of Vowels in the String
+
+class CrosswordPuzzle {		//here, data is present, but operations are performed in another place.
+public void someMethodThatDoesStuff {
+bunch of stuff not shown
+count = vowelCount(aString);
+blah
+}
+
+private int vowelCount(String word) {	//here, operations are performed on the parameters passesd only.
+int vowelCount = 0;
+for (int k = 0; k< word.length(); k++ ) {
+char current = word.charAt(k);
+if ( (current == 'a') || (current == 'e' ) || (current == 'i') || (current == "o" )
+|| (current == "u") )
+vowelCount++;
+}
+return vowelCount;
+}
+
+OO Version:
+
+class CrosswordPuzzle {
+public void someMethodThatDoesStuff {
+bunch of stuff not shown
+count = aString.vowelCount();		
+blah
+}
+
+What not to do:
+1> Avoid Abbreviations
+2> Describe What "flag" is Used For : Do not help understand code
+if (flag) {
+...
+}
+if (foundDuplicate) {
+...
+}
+3> Variables 1 through N
+String s1;
+String s2;
+
+Instead Use:
+String fileContents;
+String pattern;
+
+Who can remember the difference between s1 and s2?
+
+4> Avoid Names With No Meaning
+MyLinkedList , temp
+Who are you?
+What makes your LinkedList different?
+
+All variables are temporary
+
+5>Guidelines - Class Names
+
+Use nouns
+No abbreviations
+
+Superclass
+Single word to convey its purpose
+
+Subclass
+Prepend adjective to superclass name
+Ex:
+1>Reader
+StringReader
+2>List
+ArrayList 
+LinkedList
+
+Use names that indicate role variable is playing
+Make boolean variable names true/false statement: isVisible, hasMultipleParts
+
+Wrong: 
+public void execute(Vector vector) {
+Stack s;
+}
+
+Right:
+public void execute(Vector commands) {
+Stack commandsExecuted;
+}
+
+Do not create god classes/objects in your system
+class String {		//Data(String) and Operations are performed in the String class only
+public int vowelCount {
+int count = 0;
+for (char current in this)
+if (current.isVowel()) count++;
+return count;
+}
+
+class Character {		//Data(Character) and Operations are performed in the Character class only
+public int vowelCount {
+public boolean isVowel() {
+return (this == 'a') || (this == 'e' ) || (this == 'i') || (this == "o" )|| (this == "u");
+}
