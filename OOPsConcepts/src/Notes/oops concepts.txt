@@ -10,14 +10,14 @@ Both the data and the instructions that operate on that data
 Instance of a class
 
 Abstraction
-ìExtracting the essential details about an item or group
-of items, while ignoring the unessential details.î
+‚ÄúExtracting the essential details about an item or group
+of items, while ignoring the unessential details.‚Äù
 Edward Berard
 
-ìThe process of identifying common patterns that have
+‚ÄúThe process of identifying common patterns that have
 systematic variations; an abstraction represents the
 common pattern and provides a means for specifying
-which variation to use.î
+which variation to use.‚Äù
 Richard Gabriel
 
 Encapsulation
@@ -185,3 +185,34 @@ public int vowelCount {
 public boolean isVowel() {
 return (this == 'a') || (this == 'e' ) || (this == 'i') || (this == "o" )|| (this == "u");
 }
+
+
+// Stackoverflow 
+
+If you like housing metaphors:
+
+A class is like the blueprint for a house. Using this blueprint, you can build as many houses as you like.
+each house you build (or instantiate, in OO lingo) is an object, also known as an instance.
+each house also has an address, of course. If you want to tell someone where the house is, you give them a card with the address written on it. That card is the object's reference.
+If you want to visit the house, you look at the address written on the card. This is called dereferencing.
+You can copy that reference as much as you like, but there's just one house -- you're just copying the card that has the address on it, not the house itself. Java methods are always pass-by-value, but the value could be an object's reference. So, if I have:
+
+Foo myFoo = new Foo();     // 1
+callBar(myFoo);            // 2
+myFoo.doSomething()        // 4
+
+void callBar(Foo foo) {
+    foo = new Foo();       // 3
+}
+Then let's see what's happening.
+
+Several things are happening in line 1. new Foo() tells the JVM to build a new house using the Foo blueprint. The JVM does so, and returns a reference to the house. You then copy this reference to myFoo. This is basically like asking a contractor to build you a house. He does, then tells you the house's address; you write this address down.
+In line 2, you give this address to another method, callBar. Let's jump to that method next.
+Here, we have a reference Foo foo. Java is pass-by-value, so the foo in callBar is a copy of the myFoo reference. Think of it like giving callBar its very own card with the house's address on it. What does callBar do with this card? It asks for a new house to be built, and then uses the card you gave it to write that new house's address. Note that callBar now can't get to the first house (the one we built in line 1), but that house is unchanged by the fact that a card that used to have its address on it, now has some other house's address on it.
+Back in the first method, we dereference myFoo to call a method on it (doSomething()). This is like looking at the card, going to the house whose address is on the card, and then doing something in that house. Note that our card with myFoo's address is unchanged by the callBar method -- remember, we gave callBar a copy of our reference.
+The whole sequence would be something like:
+
+Ask JVM to build a house. It does, and gives us the address. We copy this address to a card named myFoo.
+We invoke callBar. Before we do, we copy the address written on myfoo to a new card, which we give to callBar. It calls that card foo.
+callBar asks the JVM for another house. It creates it, and returns the new house's address. callBar copies this address to the card we gave it.
+Back in the first method, we look at our original, unchanged card; go to the house whose address is on our card; and do something there.
